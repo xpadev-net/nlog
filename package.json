@@ -7,8 +7,12 @@
     "db:push": "prisma db push",
     "dev": "next dev",
     "postinstall": "prisma generate",
-    "lint": "next lint",
-    "start": "next start"
+    "format": "prettier --write \"src/**/*.{tsx,ts,js,json,css,scss}\"",
+    "lint": "next lint --fix",
+    "check-types": "npx tsc --noEmit --jsx react-jsx",
+    "lint:fix": "npm run format&&npm run lint&&npm run check-types",
+    "start": "next start",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@prisma/client": "^5.1.1",
@@ -33,6 +37,11 @@
     "@typescript-eslint/parser": "^6.3.0",
     "eslint": "^8.47.0",
     "eslint-config-next": "^13.5.4",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.1",
+    "prettier": "^3.0.3",
     "prisma": "^5.1.1",
     "typescript": "^5.1.6"
   },
