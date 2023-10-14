@@ -9,7 +9,7 @@ type props = {
 const TaskSidebar = ({ itemId }: props) => {
   const { data: tasks } = api.tasks.getAll.useQuery({ itemId });
   return (
-    <Sidebar className={"fixed left-60 top-0 bg-base-200"}>
+    <Sidebar className={"fixed left-80 top-0 bg-base-200"}>
       <li className="menu-title">Runs</li>
       {tasks?.map((item) => {
         return (

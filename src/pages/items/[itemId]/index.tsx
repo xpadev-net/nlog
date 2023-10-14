@@ -20,7 +20,7 @@ const ItemPage = () => {
   return (
     <div>
       <ItemSidebar />
-      <ul className={"ml-[15rem] menu "}>
+      <ul className={"ml-[20rem] menu "}>
         <li className="menu-title">Runs</li>
         <div className={"flex flex-col gap-2"}>
           {tasks?.map((task) => {

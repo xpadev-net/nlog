@@ -26,7 +26,7 @@ const TaskPage = () => {
     <div>
       <ItemSidebar />
       <TaskSidebar itemId={query.itemId} />
-      <div className="ml-[30rem] h-screen flex flex-col">
+      <div className="ml-[40rem] h-screen flex flex-col">
         {task && <TaskDetail task={task} />}
         <pre
           className={
