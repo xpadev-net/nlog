@@ -1,8 +1,9 @@
 import { useRouter } from "next/router";
 import Link from "next/link";
+import type { ReactNode } from "react";
 
 type props = {
-  name: string;
+  name: ReactNode;
   href: string;
 };
 

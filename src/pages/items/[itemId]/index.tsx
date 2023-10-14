@@ -20,11 +20,14 @@ const ItemPage = () => {
   return (
     <div>
       <ItemSidebar />
-      <div className={"ml-[15rem]"}>
-        {tasks?.map((task) => {
-          return <TaskCard key={task.id} {...task} />;
-        })}
-      </div>
+      <ul className={"ml-[15rem] menu "}>
+        <li className="menu-title">Tasks</li>
+        <div className={"flex flex-col gap-2"}>
+          {tasks?.map((task) => {
+            return <TaskCard key={task.id} {...task} />;
+          })}
+        </div>
+      </ul>
     </div>
   );
 };

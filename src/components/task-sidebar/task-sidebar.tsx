@@ -18,9 +18,17 @@ const TaskSidebar = ({ itemId }: props) => {
   return (
     <Sidebar className={"fixed left-60 top-0 bg-base-200"}>
       <li className="menu-title">Tasks</li>
-      {items.map((item) => {
+      {tasks?.map((item) => {
         return (
-          <SidebarItem name={item.name} href={item.href} key={item.href} />
+          <SidebarItem
+            name={
+              <>
+                #{item.id} {item.command}
+              </>
+            }
+            href={`/items/${item.itemId}/tasks/${item.id}`}
+            key={item.id}
+          />
         );
       })}
     </Sidebar>

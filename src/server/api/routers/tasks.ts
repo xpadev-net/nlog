@@ -7,4 +7,16 @@ export const tasksRouter = createTRPCRouter({
     .query(({ input, ctx }) => {
       return ctx.db.task.findMany({ where: { itemId: input.itemId } });
     }),
+  getTask: publicProcedure
+    .input(
+      z.object({
+        taskId: z.number(),
+      }),
+    )
+    .query(({ input, ctx }) => {
+      return ctx.db.task.findFirst({
+        where: { id: input.taskId },
+        include: { logs: true },
+      });
+    }),
 });
