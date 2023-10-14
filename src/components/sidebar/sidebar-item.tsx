@@ -8,7 +8,6 @@ type props = {
 
 const SidebarItem = ({ name, href }: props) => {
   const router = useRouter();
-  console.log(router.asPath);
   return (
     <li>
       <Link

@@ -1,23 +1,12 @@
-import { SidebarItem } from "~/components/sidebar/sidebar-item";
+import type { ReactNode } from "react";
 
 type props = {
-  items: {
-    name: string;
-    href: string;
-  }[];
+  children: ReactNode;
   className: string;
 };
 
-const Sidebar = ({ items, className }: props) => {
-  return (
-    <ul className={`menu w-60 bg-base-200 h-screen ${className}`}>
-      {items.map((item) => {
-        return (
-          <SidebarItem name={item.name} href={item.href} key={item.href} />
-        );
-      })}
-    </ul>
-  );
+const Sidebar = ({ children, className }: props) => {
+  return <ul className={`menu w-60 h-screen ${className}`}>{children}</ul>;
 };
 
 export { Sidebar };

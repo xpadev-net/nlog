@@ -1,8 +1,9 @@
 import { api } from "~/utils/api";
-import { Sidebar } from "~/components/sidebar";
 import { useRouter } from "next/router";
 
 import z from "zod";
+import { ItemSidebar } from "~/components/item-sidebar/item-sidebar";
+import { TaskSidebar } from "~/components/task-sidebar";
 
 const querySchema = z.object({
   itemId: z.preprocess((v) => Number(v), z.number()),
@@ -18,34 +19,12 @@ const TaskPage = () => {
   }
   const query = parsedQuery.data;
 
-  const { data: items } = api.items.getAll.useQuery();
-  const { data: tasks } = api.tasks.getAll.useQuery({ itemId: query.itemId });
   const { data: logs } = api.logs.getAll.useQuery({ taskId: query.taskId });
 
   return (
     <div>
-      <Sidebar
-        items={
-          items?.map((task) => {
-            return {
-              name: task.name,
-              href: `/items/${task.id}`,
-            };
-          }) ?? []
-        }
-        className={"fixed left-0 top-0"}
-      />
-      <Sidebar
-        items={
-          tasks?.map((task) => {
-            return {
-              name: task.command,
-              href: `/items/${task.itemId}/tasks/${task.id}`,
-            };
-          }) ?? []
-        }
-        className={"fixed left-60 top-0"}
-      />
+      <ItemSidebar />
+      <TaskSidebar itemId={query.itemId} />
       <div className="ml-[30rem]">
         <pre
           className={"whitespace-pre-wrap break-words flex-grow-0 max-w-full"}
