@@ -10,7 +10,7 @@ type props = {
 
 const TaskDetail = ({ task }: props) => {
   return (
-    <div className={"grid grid-cols-2 p-4"}>
+    <div className={"grid grid-cols-1 2xl:grid-cols-2 p-4 truncate"}>
       <TaskDetailItem name={"実行者"} value={task.issuer} />
       <TaskDetailItem name={"コマンド"} value={task.command} />
       <TaskDetailItem name={"作業ディレクトリ"} value={task.workDir} />
@@ -31,8 +31,8 @@ const TaskDetailItem = ({
 }) => {
   return (
     <p className={"flex flex-row gap-4"}>
-      <span>{name}:</span>
-      <pre>
+      <span className={"whitespace-nowrap"}>{name}:</span>
+      <pre className={"break-normal whitespace-pre-wrap"}>
         <code>{value}</code>
       </pre>
     </p>
