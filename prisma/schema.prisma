@@ -27,13 +27,14 @@ model Task {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  item      Item   @relation(fields: [itemId], references: [id])
+  item      Item    @relation(fields: [itemId], references: [id])
   itemId    Int
   issuer    String // username(terminal) or systemd-timer
   workDir   String
   command   String
   processId Int
   exitCode  Int?
+  checked   Boolean @default(false)
   logs      Log[]
 }
 
