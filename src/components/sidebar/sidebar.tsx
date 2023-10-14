@@ -5,11 +5,12 @@ type props = {
     name: string;
     href: string;
   }[];
+  className: string;
 };
 
-const Sidebar = ({ items }: props) => {
+const Sidebar = ({ items, className }: props) => {
   return (
-    <ul className="menu p-4 w-60 bg-base-200 h-screen">
+    <ul className={`menu w-60 bg-base-200 h-screen ${className}`}>
       {items.map((item) => {
         return (
           <SidebarItem name={item.name} href={item.href} key={item.href} />

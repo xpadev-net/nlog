@@ -11,7 +11,10 @@ const SidebarItem = ({ name, href }: props) => {
   console.log(router.asPath);
   return (
     <li>
-      <Link href={href} className={router.asPath === href ? "active" : ""}>
+      <Link
+        href={href}
+        className={router.asPath.startsWith(href) ? "active" : ""}
+      >
         {name}
       </Link>
     </li>
