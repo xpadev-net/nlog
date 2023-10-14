@@ -42,7 +42,7 @@ const TaskPage = () => {
                     log.type === "err" && "bg-error text-error-content"
                   } px-4`}
                 >
-                  {log.message.replace(/(^[\n\r]+|[\n\r]+$)/g, "")}
+                  {log.message}
                 </p>
               );
             })}
