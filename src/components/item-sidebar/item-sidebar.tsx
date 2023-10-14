@@ -10,13 +10,6 @@ const ItemSidebar = () => {
   const [val, setVal] = useState("");
   const ref = useRef<HTMLDialogElement>(null);
   const mutation = api.items.createItem.useMutation();
-  const parts =
-    items?.map((task) => {
-      return {
-        name: task.name,
-        href: `/items/${task.id}`,
-      };
-    }) ?? [];
   const append = () => {
     ref.current?.showModal();
   };
@@ -31,12 +24,16 @@ const ItemSidebar = () => {
     <>
       <Sidebar className={"fixed left-0 top-0 bg-base-300"}>
         <li onClick={append}>
-          <span>Add Item</span>
+          <span>Add Task</span>
         </li>
-        <li className="menu-title">Items</li>
-        {parts.map((item) => {
+        <li className="menu-title">Tasks</li>
+        {items?.map((item) => {
           return (
-            <SidebarItem name={item.name} href={item.href} key={item.href} />
+            <SidebarItem
+              name={`#${item.id} ${item.name}`}
+              href={`/items/${item.id}`}
+              key={item.id}
+            />
           );
         })}
       </Sidebar>
@@ -44,7 +41,7 @@ const ItemSidebar = () => {
         <div className="modal-box">
           <input
             type="text"
-            placeholder="Enter Item Name"
+            placeholder="Enter Task Name"
             className="input input-bordered w-full max-w-xs"
             value={val}
             onChange={(e) => setVal(e.target.value)}

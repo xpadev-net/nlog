@@ -21,7 +21,7 @@ const ItemPage = () => {
     <div>
       <ItemSidebar />
       <ul className={"ml-[15rem] menu "}>
-        <li className="menu-title">Tasks</li>
+        <li className="menu-title">Runs</li>
         <div className={"flex flex-col gap-2"}>
           {tasks?.map((task) => {
             return <TaskCard key={task.id} {...task} />;
