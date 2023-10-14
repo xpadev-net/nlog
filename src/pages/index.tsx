@@ -11,6 +11,7 @@ export default function Home() {
           return (
             <div key={item.id}>
               <ItemCard
+                itemId={item.id}
                 name={item.name}
                 lastExecuted={item.tasks[0]?.createdAt}
                 errorCount={item._count.tasks}
