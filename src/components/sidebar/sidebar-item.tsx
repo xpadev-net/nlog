@@ -9,12 +9,11 @@ type props = {
 
 const SidebarItem = ({ name, href }: props) => {
   const router = useRouter();
+  const isActive =
+    router.asPath === href || router.asPath.startsWith(href + "/");
   return (
     <li>
-      <Link
-        href={href}
-        className={router.asPath.startsWith(href) ? "active" : ""}
-      >
+      <Link href={href} className={isActive ? "active" : ""}>
         {name}
       </Link>
     </li>
