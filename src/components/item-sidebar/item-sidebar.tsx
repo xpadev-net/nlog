@@ -22,20 +22,24 @@ const ItemSidebar = () => {
   };
   return (
     <>
-      <Sidebar className={"fixed left-0 top-0 bg-base-300"}>
+      <Sidebar className={"fixed left-0 top-0 bg-base-300 flex-nowrap"}>
         <li onClick={append}>
           <span>Add Task</span>
         </li>
         <li className="menu-title">Tasks</li>
-        {items?.map((item) => {
-          return (
-            <SidebarItem
-              name={`#${item.id} ${item.name}`}
-              href={`/items/${item.id}`}
-              key={item.id}
-            />
-          );
-        })}
+        <div
+          className={"flex flex-col overflow-y-scroll max-h-full flex-grow-0"}
+        >
+          {items?.map((item) => {
+            return (
+              <SidebarItem
+                name={`#${item.id} ${item.name}`}
+                href={`/items/${item.id}`}
+                key={item.id}
+              />
+            );
+          })}
+        </div>
       </Sidebar>
       <dialog className="modal" ref={ref}>
         <div className="modal-box">

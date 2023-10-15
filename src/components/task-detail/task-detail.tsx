@@ -13,7 +13,11 @@ type props = {
 const TaskDetail = ({ task }: props) => {
   const isRunning = task.createdAt.getTime() === task.updatedAt.getTime();
   return (
-    <div className={"grid grid-cols-1 2xl:grid-cols-2 p-4 relative"}>
+    <div
+      className={`grid grid-cols-1 2xl:grid-cols-2 p-4 relative ${
+        isRunning && "pt-8"
+      }`}
+    >
       <TaskDetailItem name={"User"} value={task.issuer} />
       <TaskDetailItem name={"Command"} value={task.command} />
       <TaskDetailItem name={"WorkingDir"} value={task.workDir} />

@@ -9,14 +9,14 @@ type props = {
 const TaskSidebar = ({ itemId }: props) => {
   const { data: tasks } = api.tasks.getAll.useQuery({ itemId });
   return (
-    <Sidebar className={"fixed left-80 top-0 bg-base-200"}>
+    <Sidebar className={"fixed left-80 top-0 bg-base-200 flex-nowrap"}>
       <li className="menu-title">Runs</li>
-      {tasks?.map((item) => {
-        const isRunning = item.createdAt.getTime() === item.updatedAt.getTime();
-        return (
-          <SidebarItem
-            name={
-              <div className={"flex flex-col gap-2"}>
+      <div className={"flex flex-col overflow-y-scroll max-h-full flex-grow-0"}>
+        {tasks?.map((item) => {
+          const isRunning = item.createdAt.getTime() === item.updatedAt.getTime();return (
+            <SidebarItem
+              name={
+                <div className={"flex flex-col gap-2"}>
                 <span>
                   #{item.id} {item.command}
                 </span>
@@ -29,12 +29,13 @@ const TaskSidebar = ({ itemId }: props) => {
                   </div>
                 )}
               </div>
-            }
-            href={`/items/${item.itemId}/tasks/${item.id}`}
-            key={item.id}
-          />
-        );
-      })}
+              }
+              href={`/items/${item.itemId}/tasks/${item.id}`}
+              key={item.id}
+            />
+          );
+        })}
+      </div>
     </Sidebar>
   );
 };

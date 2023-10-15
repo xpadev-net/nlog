@@ -20,9 +20,13 @@ const ItemPage = () => {
   return (
     <div>
       <ItemSidebar />
-      <ul className={"ml-[20rem] menu "}>
+      <ul className={"ml-[20rem] menu flex-nowrap h-screen"}>
         <li className="menu-title">Runs</li>
-        <div className={"flex flex-col gap-2"}>
+        <div
+          className={
+            "flex flex-col gap-2 overflow-y-scroll max-h-full flex-grow-0"
+          }
+        >
           {tasks?.map((task) => {
             return <TaskCard key={task.id} {...task} />;
           })}
