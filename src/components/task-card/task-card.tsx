@@ -24,6 +24,7 @@ const TaskCard = ({
   createdAt,
   updatedAt,
 }: props) => {
+  const isRunning = createdAt.getTime() === updatedAt.getTime();
   return (
     <li>
       <Link
@@ -37,6 +38,13 @@ const TaskCard = ({
           </pre>
         </div>
         <div className={"flex flex-row gap-2"}>
+          {isRunning && (
+            <div className="badge badge-secondary gap-2">
+              <div className={"flex flex-row items-center gap-1"}>
+                <span className="loading loading-ring loading-xs"></span>Running
+              </div>
+            </div>
+          )}
           <div className={"flex flex-row items-center gap-1"}>
             <ScheduleFilledIcon
               className={"fill-current"}
@@ -45,14 +53,16 @@ const TaskCard = ({
             />
             {createdAt.toLocaleString()}
           </div>
-          <div className={"flex flex-row items-center gap-1"}>
-            <HistoryFilledIcon
-              className={"fill-current"}
-              width={16}
-              height={16}
-            />
-            {updatedAt.toLocaleString()}
-          </div>
+          {!isRunning && (
+            <div className={"flex flex-row items-center gap-1"}>
+              <HistoryFilledIcon
+                className={"fill-current"}
+                width={16}
+                height={16}
+              />
+              {updatedAt.toLocaleString()}
+            </div>
+          )}
           <div className={"flex flex-row items-center gap-1"}>
             <AccountTreeFilledIcon
               className={"fill-current"}
