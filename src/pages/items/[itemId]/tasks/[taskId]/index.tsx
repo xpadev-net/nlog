@@ -71,6 +71,6 @@ const LogViewer = ({
     </pre>
   );
 };
-const LogViewerBlock = block(LogViewer);
+const LogViewerBlock = block(LogViewer, { ssr: false });
 
 export default TaskPage;
