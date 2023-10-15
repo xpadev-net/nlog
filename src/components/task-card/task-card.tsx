@@ -32,7 +32,7 @@ const TaskCard = ({
       >
         <div className={"flex flex-row gap-2"}>
           <span>#{id}</span>
-          <pre>
+          <pre className={"whitespace-pre-wrap"}>
             <code>{command}</code>
           </pre>
         </div>

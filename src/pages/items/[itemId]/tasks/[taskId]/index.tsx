@@ -22,13 +22,20 @@ const TaskPage = () => {
   }
   const query = parsedQuery.data;
 
-  const { data: task } = api.tasks.getTask.useQuery({ taskId: query.taskId });
+  const { data: task, isLoading } = api.tasks.getTask.useQuery({
+    taskId: query.taskId,
+  });
 
   return (
     <div>
       <ItemSidebar />
       <TaskSidebar itemId={query.itemId} />
       <div className="ml-[40rem] h-screen flex flex-col">
+        {isLoading && (
+          <div className={"grid place-items-center h-screen"}>
+            <span className="loading loading-spinner loading-lg"></span>
+          </div>
+        )}
         {task && <TaskDetail task={task} />}
         {task && <LogViewerBlock task={task} />}
       </div>
@@ -56,7 +63,7 @@ const LogViewer = ({
                 log.type === "err" && "bg-error text-error-content"
               } px-4`}
             >
-              {log.message.replace(/.+\r/, "")}
+              {log.message.replace(/^[\s\S]+\r.+$/, "")}
             </p>
           );
         })}
