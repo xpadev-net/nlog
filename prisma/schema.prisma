@@ -29,9 +29,9 @@ model Task {
 
   item      Item    @relation(fields: [itemId], references: [id])
   itemId    Int
-  issuer    String // username(terminal) or systemd-timer
-  workDir   String
-  command   String
+  issuer    String  @db.LongText
+  workDir   String  @db.LongText
+  command   String  @db.LongText
   processId Int
   exitCode  Int?
   checked   Boolean @default(false)
