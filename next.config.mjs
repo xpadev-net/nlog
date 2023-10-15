@@ -3,9 +3,10 @@
  * for Docker builds.
  */
 await import("./src/env.mjs");
+import million from "million/compiler";
 
 /** @type {import("next").NextConfig} */
-const config = {
+const nextConfig = {
   reactStrictMode: true,
 
   /**
@@ -19,4 +20,4 @@ const config = {
   },
 };
 
-export default config;
+export default million.next(nextConfig);
