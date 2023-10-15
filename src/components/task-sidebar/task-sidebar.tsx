@@ -13,22 +13,24 @@ const TaskSidebar = ({ itemId }: props) => {
       <li className="menu-title">Runs</li>
       <div className={"flex flex-col overflow-y-scroll max-h-full flex-grow-0"}>
         {tasks?.map((item) => {
-          const isRunning = item.createdAt.getTime() === item.updatedAt.getTime();return (
+          const isRunning =
+            item.createdAt.getTime() === item.updatedAt.getTime();
+          return (
             <SidebarItem
               name={
                 <div className={"flex flex-col gap-2"}>
-                <span>
-                  #{item.id} {item.command}
-                </span>
-                {isRunning && (
-                  <div className="badge badge-secondary gap-2">
-                    <div className={"flex flex-row items-center gap-1"}>
-                      <span className="loading loading-ring loading-xs"></span>
-                      Running
+                  <span>
+                    #{item.id} {item.command}
+                  </span>
+                  {isRunning && (
+                    <div className="badge badge-secondary gap-2">
+                      <div className={"flex flex-row items-center gap-1"}>
+                        <span className="loading loading-ring loading-xs"></span>
+                        Running
+                      </div>
                     </div>
-                  </div>
-                )}
-              </div>
+                  )}
+                </div>
               }
               href={`/items/${item.itemId}/tasks/${item.id}`}
               key={item.id}
