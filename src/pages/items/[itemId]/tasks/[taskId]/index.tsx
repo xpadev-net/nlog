@@ -63,7 +63,7 @@ const LogViewer = ({
                 log.type === "err" && "bg-error text-error-content"
               } px-4`}
             >
-              {log.message.replace(/^[\s\S]+\r.+$/, "")}
+              {log.message.replace(/^[\s\r\n]*[\r\n](.+?)$/, "$1")}
             </p>
           );
         })}
