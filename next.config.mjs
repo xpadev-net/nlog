@@ -18,6 +18,10 @@ const nextConfig = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  publicRuntimeConfig: {
+    APP_URL: process.env.APP_URL,
+    WS_URL: process.env.WS_URL,
+  }
 };
 
 export default million.next(nextConfig);
