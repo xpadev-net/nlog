@@ -8,14 +8,14 @@ import * as grpc from "grpc";
 import * as proto_main_pb from "../proto/main_pb";
 import * as google_protobuf_timestamp_pb from "google-protobuf/google/protobuf/timestamp_pb";
 
-interface IShopServiceService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
-    createTask: IShopServiceService_ICreateTask;
-    appendLog: IShopServiceService_IAppendLog;
-    endTask: IShopServiceService_IEndTask;
+interface ILoggingServiceService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
+    createTask: ILoggingServiceService_ICreateTask;
+    appendLog: ILoggingServiceService_IAppendLog;
+    endTask: ILoggingServiceService_IEndTask;
 }
 
-interface IShopServiceService_ICreateTask extends grpc.MethodDefinition<proto_main_pb.CreateTaskRequest, proto_main_pb.CreateTaskResponse> {
-    path: "/ShopService/CreateTask";
+interface ILoggingServiceService_ICreateTask extends grpc.MethodDefinition<proto_main_pb.CreateTaskRequest, proto_main_pb.CreateTaskResponse> {
+    path: "/LoggingService/CreateTask";
     requestStream: false;
     responseStream: false;
     requestSerialize: grpc.serialize<proto_main_pb.CreateTaskRequest>;
@@ -23,8 +23,8 @@ interface IShopServiceService_ICreateTask extends grpc.MethodDefinition<proto_ma
     responseSerialize: grpc.serialize<proto_main_pb.CreateTaskResponse>;
     responseDeserialize: grpc.deserialize<proto_main_pb.CreateTaskResponse>;
 }
-interface IShopServiceService_IAppendLog extends grpc.MethodDefinition<proto_main_pb.AppendLogRequest, proto_main_pb.AppendLogResponse> {
-    path: "/ShopService/AppendLog";
+interface ILoggingServiceService_IAppendLog extends grpc.MethodDefinition<proto_main_pb.AppendLogRequest, proto_main_pb.AppendLogResponse> {
+    path: "/LoggingService/AppendLog";
     requestStream: false;
     responseStream: false;
     requestSerialize: grpc.serialize<proto_main_pb.AppendLogRequest>;
@@ -32,8 +32,8 @@ interface IShopServiceService_IAppendLog extends grpc.MethodDefinition<proto_mai
     responseSerialize: grpc.serialize<proto_main_pb.AppendLogResponse>;
     responseDeserialize: grpc.deserialize<proto_main_pb.AppendLogResponse>;
 }
-interface IShopServiceService_IEndTask extends grpc.MethodDefinition<proto_main_pb.EndTaskRequest, proto_main_pb.EndTaskResponse> {
-    path: "/ShopService/EndTask";
+interface ILoggingServiceService_IEndTask extends grpc.MethodDefinition<proto_main_pb.EndTaskRequest, proto_main_pb.EndTaskResponse> {
+    path: "/LoggingService/EndTask";
     requestStream: false;
     responseStream: false;
     requestSerialize: grpc.serialize<proto_main_pb.EndTaskRequest>;
@@ -42,15 +42,15 @@ interface IShopServiceService_IEndTask extends grpc.MethodDefinition<proto_main_
     responseDeserialize: grpc.deserialize<proto_main_pb.EndTaskResponse>;
 }
 
-export const ShopServiceService: IShopServiceService;
+export const LoggingServiceService: ILoggingServiceService;
 
-export interface IShopServiceServer {
+export interface ILoggingServiceServer {
     createTask: grpc.handleUnaryCall<proto_main_pb.CreateTaskRequest, proto_main_pb.CreateTaskResponse>;
     appendLog: grpc.handleUnaryCall<proto_main_pb.AppendLogRequest, proto_main_pb.AppendLogResponse>;
     endTask: grpc.handleUnaryCall<proto_main_pb.EndTaskRequest, proto_main_pb.EndTaskResponse>;
 }
 
-export interface IShopServiceClient {
+export interface ILoggingServiceClient {
     createTask(request: proto_main_pb.CreateTaskRequest, callback: (error: grpc.ServiceError | null, response: proto_main_pb.CreateTaskResponse) => void): grpc.ClientUnaryCall;
     createTask(request: proto_main_pb.CreateTaskRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_main_pb.CreateTaskResponse) => void): grpc.ClientUnaryCall;
     createTask(request: proto_main_pb.CreateTaskRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_main_pb.CreateTaskResponse) => void): grpc.ClientUnaryCall;
@@ -62,7 +62,7 @@ export interface IShopServiceClient {
     endTask(request: proto_main_pb.EndTaskRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: proto_main_pb.EndTaskResponse) => void): grpc.ClientUnaryCall;
 }
 
-export class ShopServiceClient extends grpc.Client implements IShopServiceClient {
+export class LoggingServiceClient extends grpc.Client implements ILoggingServiceClient {
     constructor(address: string, credentials: grpc.ChannelCredentials, options?: object);
     public createTask(request: proto_main_pb.CreateTaskRequest, callback: (error: grpc.ServiceError | null, response: proto_main_pb.CreateTaskResponse) => void): grpc.ClientUnaryCall;
     public createTask(request: proto_main_pb.CreateTaskRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: proto_main_pb.CreateTaskResponse) => void): grpc.ClientUnaryCall;

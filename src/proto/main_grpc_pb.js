@@ -72,9 +72,9 @@ function deserialize_EndTaskResponse(buffer_arg) {
 }
 
 
-var ShopServiceService = exports.ShopServiceService = {
+var LoggingServiceService = exports.LoggingServiceService = {
   createTask: {
-    path: '/ShopService/CreateTask',
+    path: '/LoggingService/CreateTask',
     requestStream: false,
     responseStream: false,
     requestType: proto_main_pb.CreateTaskRequest,
@@ -85,7 +85,7 @@ var ShopServiceService = exports.ShopServiceService = {
     responseDeserialize: deserialize_CreateTaskResponse,
   },
   appendLog: {
-    path: '/ShopService/AppendLog',
+    path: '/LoggingService/AppendLog',
     requestStream: false,
     responseStream: false,
     requestType: proto_main_pb.AppendLogRequest,
@@ -96,7 +96,7 @@ var ShopServiceService = exports.ShopServiceService = {
     responseDeserialize: deserialize_AppendLogResponse,
   },
   endTask: {
-    path: '/ShopService/EndTask',
+    path: '/LoggingService/EndTask',
     requestStream: false,
     responseStream: false,
     requestType: proto_main_pb.EndTaskRequest,
@@ -108,4 +108,4 @@ var ShopServiceService = exports.ShopServiceService = {
   },
 };
 
-exports.ShopServiceClient = grpc.makeGenericClientConstructor(ShopServiceService);
+exports.LoggingServiceClient = grpc.makeGenericClientConstructor(LoggingServiceService);
