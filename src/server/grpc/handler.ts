@@ -8,26 +8,21 @@ import {
   type EndTaskResponse,
 } from "~/proto/main_pb";
 import { type sendUnaryData, type ServerUnaryCall } from "@grpc/grpc-js";
+import { db } from "~/server/db";
 
-const createTask: ILoggingServiceServer["createTask"] = (
-  _: ServerUnaryCall<CreateTaskRequest, CreateTaskResponse>,
-  callback: sendUnaryData<CreateTaskResponse>,
-) => {
-  console.log("[start]: createTask");
-
-  const response = new CreateTaskResponse();
-  response.setTaskid(1);
-
-  callback(null, response);
-  console.log("[end]: createTask");
-};
 
 const appendLog: ILoggingServiceServer["appendLog"] = (
-  _: ServerUnaryCall<AppendLogRequest, AppendLogResponse>,
+  call: ServerUnaryCall<AppendLogRequest, AppendLogResponse>,
   callback: sendUnaryData<AppendLogResponse>,
 ) => {
   console.log("[start]: appendLog");
-
+  const log = db.log.create({
+    data: {
+      taskId: call.request.getLog()?.getTaskid(),
+      type: call.request.getType(),
+      message: call.request.getMessage(),
+    }
+  })
   callback(null, null);
   console.log("[end]: appendLog");
 };
