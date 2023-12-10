@@ -7,6 +7,8 @@ import { TaskSidebar } from "~/components/task-sidebar";
 import { TaskDetail } from "~/components/task-detail";
 
 import { block } from "million/react-server";
+import { useEffect, useState } from "react";
+import type { Log } from ".prisma/client";
 
 const querySchema = z.object({
   itemId: z.preprocess((v) => Number(v), z.number()),
@@ -37,17 +39,29 @@ const TaskPage = () => {
           </div>
         )}
         {task && <TaskDetail task={task} />}
-        {task && <LogViewerBlock task={task} />}
+        {task && <LogViewerBlock taskId={task.id} />}
       </div>
     </div>
   );
 };
 
-const LogViewer = ({
-  task,
-}: {
-  task: { logs: { id: number; type: string; message: string }[] };
-}) => {
+const LogViewer = ({ taskId }: { taskId: number }) => {
+  const [logs, setLogs] = useState<Log[]>([]);
+  const _logs = api.logs.getAll.useQuery({ taskId });
+  useEffect(() => {
+    if (!_logs.data) return;
+    setLogs(_logs.data);
+  }, [_logs]);
+  const ref = api.logs.onAdd.useSubscription(
+    { taskId },
+    {
+      onData(data) {
+        console.log(data);
+        setLogs((logs) => [...logs, data]);
+      },
+    },
+  );
+  console.log(ref);
   return (
     <pre
       className={
@@ -55,7 +69,7 @@ const LogViewer = ({
       }
     >
       <code>
-        {task?.logs.map((log) => {
+        {logs?.map((log) => {
           return (
             <p
               key={log.id}

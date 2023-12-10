@@ -16,7 +16,6 @@ export const tasksRouter = createTRPCRouter({
     .query(({ input, ctx }) => {
       return ctx.db.task.findFirst({
         where: { id: input.taskId },
-        include: { logs: true },
       });
     }),
 });

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { db } from "~/server/db";
 import { z } from "zod";
+import { logEmitter } from "~/utils/event";
 
 const validate = z.object({
   taskId: z.number(),
@@ -23,6 +24,8 @@ export async function POST(request: Request) {
       message: input.message ?? "",
     },
   });
+  console.log("send emit");
+  logEmitter.emit("add", log);
   return NextResponse.json({
     logId: log.id,
   });
