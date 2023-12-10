@@ -1,9 +1,9 @@
-import type {ILoggingServiceServer} from "~/proto/main_grpc_pb";
-import type {sendUnaryData, ServerUnaryCall} from "@grpc/grpc-js";
-import {type CreateTaskRequest, CreateTaskResponse} from "~/proto/main_pb";
-import {db} from "~/server/db";
-import {z} from "zod";
-import {NextResponse} from "next/server";
+import type { ILoggingServiceServer } from "~/proto/main_grpc_pb";
+import type { sendUnaryData, ServerUnaryCall } from "@grpc/grpc-js";
+import { type CreateTaskRequest, CreateTaskResponse } from "~/proto/main_pb";
+import { db } from "~/server/db";
+import { z } from "zod";
+import { NextResponse } from "next/server";
 
 const validate = z.object({
   itemId: z.number(),
@@ -19,7 +19,7 @@ const createTask: ILoggingServiceServer["createTask"] = (
 ) => {
   void (async () => {
     console.log("[start]: createTask");
-    
+
     const params = {
       itemId: call.request.getItemid(),
       issuer: call.request.getIssuer(),
@@ -34,17 +34,17 @@ const createTask: ILoggingServiceServer["createTask"] = (
         error: data.error,
       });
     }
-    
+
     const task = await db.task.create({
       data: data.data,
     });
-    
+
     const response = new CreateTaskResponse();
     response.setTaskid(task.id);
-    
+
     callback(null, response);
     console.log("[end]: createTask");
   })();
 };
 
-export {createTask};
+export { createTask };
