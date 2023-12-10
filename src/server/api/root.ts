@@ -4,6 +4,7 @@ import { dashboardRouter } from "~/server/api/routers/dashboard";
 import { tasksRouter } from "~/server/api/routers/tasks";
 import { logsRouter } from "~/server/api/routers/logs";
 import { itemsRouter } from "~/server/api/routers/items";
+import { startServer } from "~/server/grpc";
 
 /**
  * This is the primary router for your server.
@@ -20,3 +21,5 @@ export const appRouter = createTRPCRouter({
 
 // export type definition of API
 export type AppRouter = typeof appRouter;
+
+startServer();
