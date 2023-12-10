@@ -2,7 +2,6 @@ import { Server, ServerCredentials } from "@grpc/grpc-js";
 import { LoggingServiceService } from "~/proto/main_grpc_pb";
 import { getServerImplement } from "~/server/grpc/handler";
 
-console.log("grpc loaded");
 const globalForGrpc = globalThis as unknown as {
   grpcInited: boolean | undefined;
 };
@@ -12,7 +11,6 @@ export const startServer = () => {
     return;
   }
   globalForGrpc.grpcInited = true;
-  console.log("startServer");
   // サーバインスタンスを生成
   const server = new Server();
 
