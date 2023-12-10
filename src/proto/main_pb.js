@@ -990,7 +990,7 @@ proto.AppendLogResponse.prototype.toObject = function(opt_includeInstance) {
  */
 proto.AppendLogResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-
+    logid: jspb.Message.getFieldWithDefault(msg, 1, 0)
   };
 
   if (includeInstance) {
@@ -1027,6 +1027,10 @@ proto.AppendLogResponse.deserializeBinaryFromReader = function(msg, reader) {
     }
     var field = reader.getFieldNumber();
     switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setLogid(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -1056,6 +1060,31 @@ proto.AppendLogResponse.prototype.serializeBinary = function() {
  */
 proto.AppendLogResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
+  f = message.getLogid();
+  if (f !== 0) {
+    writer.writeInt64(
+      1,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional int64 logId = 1;
+ * @return {number}
+ */
+proto.AppendLogResponse.prototype.getLogid = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.AppendLogResponse} returns this
+ */
+proto.AppendLogResponse.prototype.setLogid = function(value) {
+  return jspb.Message.setProto3IntField(this, 1, value);
 };
 
 

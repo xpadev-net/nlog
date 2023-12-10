@@ -124,6 +124,9 @@ export namespace AppendLogRequest {
 }
 
 export class AppendLogResponse extends jspb.Message {
+  getLogid(): number;
+  setLogid(value: number): void;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AppendLogResponse.AsObject;
   static toObject(includeInstance: boolean, msg: AppendLogResponse): AppendLogResponse.AsObject;
@@ -136,6 +139,7 @@ export class AppendLogResponse extends jspb.Message {
 
 export namespace AppendLogResponse {
   export type AsObject = {
+    logid: number,
   }
 }
 
