@@ -8,7 +8,7 @@ import { TaskDetail } from "~/components/task-detail";
 
 import { block } from "million/react-server";
 import { useEffect, useState } from "react";
-import type { Log } from ".prisma/client";
+import type { Log } from "@prisma/client";
 
 const querySchema = z.object({
   itemId: z.preprocess((v) => Number(v), z.number()),
