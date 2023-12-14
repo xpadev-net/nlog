@@ -22,9 +22,6 @@ const nextConfig = {
     APP_URL: process.env.APP_URL,
     WS_URL: process.env.WS_URL,
   },
-  experimental:{
-    instrumentationHook: true,
-  }
 };
 
 export default million.next(nextConfig);
