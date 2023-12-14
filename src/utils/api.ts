@@ -6,7 +6,6 @@
  */
 import { httpBatchLink, loggerLink } from "@trpc/client";
 import { createTRPCNext } from "@trpc/next";
-import { wsLink, createWSClient } from "@trpc/client/links/wsLink";
 import type { NextPageContext } from "next";
 import { type inferRouterInputs, type inferRouterOutputs } from "@trpc/server";
 import superjson from "superjson";
@@ -35,26 +34,18 @@ const {
 } = config;
 
 function getEndingLink(ctx: NextPageContext | undefined) {
-  if (typeof window === "undefined") {
-    return httpBatchLink({
-      url: `${APP_URL}/api/trpc`,
-      headers() {
-        if (!ctx?.req?.headers) {
-          return {};
-        }
-        // on ssr, forward client's headers to the server
-        return {
-          ...ctx.req.headers,
-          "x-ssr": "1",
-        };
-      },
-    });
-  }
-  const client = createWSClient({
-    url: WS_URL,
-  });
-  return wsLink<AppRouter>({
-    client,
+  return httpBatchLink({
+    url: `${APP_URL}/api/trpc`,
+    headers() {
+      if (!ctx?.req?.headers) {
+        return {};
+      }
+      // on ssr, forward client's headers to the server
+      return {
+        ...ctx.req.headers,
+        "x-ssr": "1",
+      };
+    },
   });
 }
 

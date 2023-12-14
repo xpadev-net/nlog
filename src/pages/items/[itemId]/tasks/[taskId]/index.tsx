@@ -52,16 +52,6 @@ const LogViewer = ({ taskId }: { taskId: number }) => {
     if (!_logs.data) return;
     setLogs(_logs.data);
   }, [_logs]);
-  const ref = api.logs.onAdd.useSubscription(
-    { taskId },
-    {
-      onData(data) {
-        console.log(data);
-        setLogs((logs) => [...logs, data]);
-      },
-    },
-  );
-  console.log(ref);
   return (
     <pre
       className={
