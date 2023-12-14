@@ -1,8 +1,9 @@
 import type { ILoggingServiceServer } from "~/proto/main_grpc_pb";
 import type { sendUnaryData, ServerUnaryCall } from "@grpc/grpc-js";
-import { type AppendLogRequest, AppendLogResponse } from "~/proto/main_pb";
+import { type AppendLogRequest, AppendLogResponse, Log } from "~/proto/main_pb";
 import { db } from "~/server/db";
 import { z } from "zod";
+import LogType = Log.LogType;
 
 const validate = z.object({
   taskId: z.number(),
@@ -17,7 +18,8 @@ const appendLog: ILoggingServiceServer["appendLog"] = (
   void (async () => {
     const params = {
       taskId: call.request.getLog()?.getTaskid(),
-      type: call.request.getLog()?.getType(),
+      type:
+        call.request.getLog()?.getType() === Log.LogType.STDOUT ? "out" : "err",
       message: call.request.getLog()?.getMessage(),
     };
     const data = validate.safeParse(params);
