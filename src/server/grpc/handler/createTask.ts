@@ -3,7 +3,6 @@ import type { sendUnaryData, ServerUnaryCall } from "@grpc/grpc-js";
 import { type CreateTaskRequest, CreateTaskResponse } from "~/proto/main_pb";
 import { db } from "~/server/db";
 import { z } from "zod";
-import { NextResponse } from "next/server";
 
 const validate = z.object({
   itemId: z.number(),
@@ -30,9 +29,8 @@ const createTask: ILoggingServiceServer["createTask"] = (
     };
     const data = validate.safeParse(params);
     if (!data.success) {
-      return NextResponse.json({
-        error: data.error,
-      });
+      callback(data.error, null);
+      return;
     }
 
     const task = await db.task.create({

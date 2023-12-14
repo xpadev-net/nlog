@@ -2,7 +2,6 @@ import type { ILoggingServiceServer } from "~/proto/main_grpc_pb";
 import type { sendUnaryData, ServerUnaryCall } from "@grpc/grpc-js";
 import type { EndTaskRequest, EndTaskResponse } from "~/proto/main_pb";
 import { z } from "zod";
-import { NextResponse } from "next/server";
 import { db } from "~/server/db";
 
 const validate = z.object({
@@ -21,9 +20,8 @@ const endTask: ILoggingServiceServer["endTask"] = (
     };
     const data = validate.safeParse(params);
     if (!data.success) {
-      return NextResponse.json({
-        error: data.error,
-      });
+      callback(data.error, null);
+      return;
     }
     const input = data.data;
     await db.task.update({

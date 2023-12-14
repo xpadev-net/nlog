@@ -3,7 +3,6 @@ import type { sendUnaryData, ServerUnaryCall } from "@grpc/grpc-js";
 import { type AppendLogRequest, AppendLogResponse } from "~/proto/main_pb";
 import { db } from "~/server/db";
 import { z } from "zod";
-import { NextResponse } from "next/server";
 
 const validate = z.object({
   taskId: z.number(),
@@ -23,9 +22,8 @@ const appendLog: ILoggingServiceServer["appendLog"] = (
     };
     const data = validate.safeParse(params);
     if (!data.success) {
-      return NextResponse.json({
-        error: data.error,
-      });
+      callback(data.error, null);
+      return;
     }
     const log = await db.log.create({
       data: data.data,
