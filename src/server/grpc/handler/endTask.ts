@@ -1,6 +1,6 @@
 import type { ILoggingServiceServer } from "~/proto/main_grpc_pb";
 import type { sendUnaryData, ServerUnaryCall } from "@grpc/grpc-js";
-import type { EndTaskRequest, EndTaskResponse } from "~/proto/main_pb";
+import { type EndTaskRequest, EndTaskResponse } from "~/proto/main_pb";
 import { z } from "zod";
 import { db } from "~/server/db";
 
@@ -32,7 +32,8 @@ const endTask: ILoggingServiceServer["endTask"] = (
         exitCode: input.exitCode,
       },
     });
-    callback(null, null);
+    const response = new EndTaskResponse();
+    callback(null, response);
   })();
 };
 export { endTask };
