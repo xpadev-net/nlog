@@ -26,7 +26,9 @@ const ping: ILoggingServiceServer["ping"] = (
       where: {
         id: input.taskId,
       },
-      data: {},
+      data: {
+        updatedAt: new Date(),
+      },
     });
     const response = new PingResponse();
     callback(null, response);
