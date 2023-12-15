@@ -51,27 +51,62 @@ const TaskPage = () => {
 };
 
 const LogViewer = ({ taskId }: { taskId: number }) => {
+  const list = useRef<HTMLPreElement>(null);
   const timeoutRef = useRef<number>();
   const [logs, setLogs] = useState<Log[]>([]);
   const _logs = api.logs.getAll.useQuery({ taskId });
+
+  const reFetch = () => {
+    void _logs?.refetch();
+  };
+
   useEffect(() => {
     if (!_logs.data) return;
+    if (!list.current) return;
+    const isBottom =
+      list.current.scrollTop + list.current.clientHeight ===
+      list.current.scrollHeight;
+    const scrollTop = list.current.scrollTop;
+    if (_logs.data.length === logs.length) {
+      return;
+    }
     setLogs(_logs.data);
-    const reFetch = () => {
-      void _logs?.refetch().then(() => {
+    setTimeout(() => {
+      if (isBottom) {
+        list.current?.scrollTo(0, list.current.scrollHeight);
+        console.log("refetch: set timeout");
         timeoutRef.current = window.setTimeout(reFetch, 10000);
-      });
-    };
+      } else {
+        timeoutRef.current = -1;
+        list.current?.scrollTo(0, scrollTop);
+      }
+    }, 0);
+  }, [_logs, logs]);
+
+  useEffect(() => {
+    console.log("on mount: set timeout");
     timeoutRef.current = window.setTimeout(reFetch, 10000);
     return () => {
       clearTimeout(timeoutRef.current);
     };
-  }, [_logs]);
+  }, []);
+  const onScrollEnd = () => {
+    if ((timeoutRef.current ?? 0) > -1 || !list.current) return;
+    const isBottom =
+      list.current.scrollTop + list.current.clientHeight ===
+      list.current.scrollHeight;
+    if (isBottom) {
+      console.log("scroll end: set timeout");
+      timeoutRef.current = window.setTimeout(reFetch, 1000);
+    }
+  };
   return (
     <pre
       className={
         "whitespace-pre-wrap break-words max-w-full overflow-x-auto flex-grow bg-base-300"
       }
+      ref={list}
+      onScroll={onScrollEnd}
     >
       <code className={"flex flex-col"}>
         {logs?.map((log) => {
