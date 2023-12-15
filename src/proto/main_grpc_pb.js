@@ -71,6 +71,28 @@ function deserialize_EndTaskResponse(buffer_arg) {
   return proto_main_pb.EndTaskResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_PingRequest(arg) {
+  if (!(arg instanceof proto_main_pb.PingRequest)) {
+    throw new Error('Expected argument of type PingRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_PingRequest(buffer_arg) {
+  return proto_main_pb.PingRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_PingResponse(arg) {
+  if (!(arg instanceof proto_main_pb.PingResponse)) {
+    throw new Error('Expected argument of type PingResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_PingResponse(buffer_arg) {
+  return proto_main_pb.PingResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 
 var LoggingServiceService = exports.LoggingServiceService = {
   createTask: {
@@ -105,6 +127,17 @@ var LoggingServiceService = exports.LoggingServiceService = {
     requestDeserialize: deserialize_EndTaskRequest,
     responseSerialize: serialize_EndTaskResponse,
     responseDeserialize: deserialize_EndTaskResponse,
+  },
+  ping: {
+    path: '/LoggingService/Ping',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_main_pb.PingRequest,
+    responseType: proto_main_pb.PingResponse,
+    requestSerialize: serialize_PingRequest,
+    requestDeserialize: deserialize_PingRequest,
+    responseSerialize: serialize_PingResponse,
+    responseDeserialize: deserialize_PingResponse,
   },
 };
 

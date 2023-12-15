@@ -10,6 +10,7 @@ interface ILoggingServiceService extends grpc.ServiceDefinition<grpc.UntypedServ
   createTask: grpc.MethodDefinition<proto_main_pb.CreateTaskRequest, proto_main_pb.CreateTaskResponse>;
   appendLog: grpc.MethodDefinition<proto_main_pb.AppendLogRequest, proto_main_pb.AppendLogResponse>;
   endTask: grpc.MethodDefinition<proto_main_pb.EndTaskRequest, proto_main_pb.EndTaskResponse>;
+  ping: grpc.MethodDefinition<proto_main_pb.PingRequest, proto_main_pb.PingResponse>;
 }
 
 export const LoggingServiceService: ILoggingServiceService;
@@ -18,6 +19,7 @@ export interface ILoggingServiceServer extends grpc.UntypedServiceImplementation
   createTask: grpc.handleUnaryCall<proto_main_pb.CreateTaskRequest, proto_main_pb.CreateTaskResponse>;
   appendLog: grpc.handleUnaryCall<proto_main_pb.AppendLogRequest, proto_main_pb.AppendLogResponse>;
   endTask: grpc.handleUnaryCall<proto_main_pb.EndTaskRequest, proto_main_pb.EndTaskResponse>;
+  ping: grpc.handleUnaryCall<proto_main_pb.PingRequest, proto_main_pb.PingResponse>;
 }
 
 export class LoggingServiceClient extends grpc.Client {
@@ -31,4 +33,7 @@ export class LoggingServiceClient extends grpc.Client {
   endTask(argument: proto_main_pb.EndTaskRequest, callback: grpc.requestCallback<proto_main_pb.EndTaskResponse>): grpc.ClientUnaryCall;
   endTask(argument: proto_main_pb.EndTaskRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<proto_main_pb.EndTaskResponse>): grpc.ClientUnaryCall;
   endTask(argument: proto_main_pb.EndTaskRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<proto_main_pb.EndTaskResponse>): grpc.ClientUnaryCall;
+  ping(argument: proto_main_pb.PingRequest, callback: grpc.requestCallback<proto_main_pb.PingResponse>): grpc.ClientUnaryCall;
+  ping(argument: proto_main_pb.PingRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<proto_main_pb.PingResponse>): grpc.ClientUnaryCall;
+  ping(argument: proto_main_pb.PingRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<proto_main_pb.PingResponse>): grpc.ClientUnaryCall;
 }
