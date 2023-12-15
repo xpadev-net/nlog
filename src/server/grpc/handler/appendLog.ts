@@ -3,7 +3,6 @@ import type { sendUnaryData, ServerUnaryCall } from "@grpc/grpc-js";
 import { type AppendLogRequest, AppendLogResponse, Log } from "~/proto/main_pb";
 import { db } from "~/server/db";
 import { z } from "zod";
-import LogType = Log.LogType;
 
 const validate = z.object({
   taskId: z.number(),
