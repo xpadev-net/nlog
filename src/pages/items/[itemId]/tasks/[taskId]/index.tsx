@@ -58,17 +58,17 @@ const LogViewer = ({ taskId }: { taskId: number }) => {
         "whitespace-pre-wrap break-words max-w-full overflow-x-auto flex-grow bg-base-300"
       }
     >
-      <code>
+      <code className={"flex flex-col"}>
         {logs?.map((log) => {
           return (
-            <p
+            <span
               key={log.id}
               className={`${
                 log.type === "err" && "bg-error text-error-content"
               } px-4`}
             >
               {log.message.replace(/^[\s\r\n]*[\r\n](.+?)$/, "$1")}
-            </p>
+            </span>
           );
         })}
       </code>
