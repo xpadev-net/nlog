@@ -1,5 +1,7 @@
 import {
   type FC,
+  forwardRef,
+  type ForwardRefRenderFunction,
   type UIEventHandler,
   useEffect,
   useMemo,
@@ -15,6 +17,7 @@ const LogViewer = ({ taskId }: { taskId: number }) => {
   const timeoutRef = useRef<number>();
   const [logs, setLogs] = useState<Log[]>([]);
   const [autoScroll, setAutoScroll] = useState(true);
+  const [anchor, setAnchor] = useState<number | undefined>(undefined);
   const _logs = api.logs.getAll.useQuery({ taskId });
 
   const reFetch = () => {
@@ -24,12 +27,10 @@ const LogViewer = ({ taskId }: { taskId: number }) => {
 
   useEffect(() => {
     if (!_logs.data) return;
-    if (!list.current) return;
     const isUpdated = _logs.data.length !== logs.length;
     if (isUpdated) {
       setLogs(_logs.data);
     }
-    console.log("refetched: autoScroll:", autoScroll);
 
     if (autoScroll) {
       timeoutRef.current = window.setTimeout(reFetch, 1000);
@@ -40,7 +41,7 @@ const LogViewer = ({ taskId }: { taskId: number }) => {
 
   useEffect(() => {
     if (autoScroll) {
-      list.current?.scrollTo(0, list.current.scrollHeight);
+      setAnchor(logs[logs.length - 1]?.id);
     }
   });
 
@@ -52,32 +53,47 @@ const LogViewer = ({ taskId }: { taskId: number }) => {
     };
   }, []);
   const onScrollEnd: UIEventHandler<HTMLPreElement> = (event) => {
-    if (!list.current || !event.target) return;
+    if (!event.target) return;
     const isBottom =
-      list.current.scrollTop + list.current.clientHeight ===
-      list.current.scrollHeight;
+      event.currentTarget.scrollTop + event.currentTarget.clientHeight ===
+      event.currentTarget.scrollHeight;
     setAutoScroll(isBottom);
     if ((timeoutRef.current ?? 0) > -1) return;
     if (isBottom) {
-      console.log("scroll end: set timeout");
       timeoutRef.current = window.setTimeout(reFetch, 1000);
     }
   };
   return (
+    <LogViewerWrapperRef
+      ref={list}
+      logs={logs.slice(-1000)}
+      onScroll={onScrollEnd}
+      anchor={anchor}
+    />
+  );
+};
+export const LogViewerBlock = LogViewer;
+
+const LogViewerWrapper: ForwardRefRenderFunction<
+  HTMLPreElement,
+  { onScroll: UIEventHandler<HTMLPreElement>; logs: Log[]; anchor?: number }
+> = ({ onScroll, logs, anchor }, ref) => {
+  return (
     <pre
+      ref={ref}
       className={
         "whitespace-pre-wrap break-words max-w-full overflow-x-auto flex-grow bg-base-300"
       }
-      ref={list}
-      onScroll={onScrollEnd}
+      onScroll={onScroll}
     >
       <code>
-        {logs?.slice(-1000).map((log) => {
+        {logs.map((log) => {
           return (
             <LogLine
               key={log.id}
               content={log.message}
               isError={log.type === "err"}
+              anchor={log.id === anchor}
             />
           );
         })}
@@ -85,12 +101,18 @@ const LogViewer = ({ taskId }: { taskId: number }) => {
     </pre>
   );
 };
-export const LogViewerBlock = LogViewer;
+const LogViewerWrapperRef = forwardRef(LogViewerWrapper);
 
-const LogLine: FC<{ content: string; isError: boolean }> = ({
+const LogLine: FC<{ content: string; isError: boolean; anchor: boolean }> = ({
   content,
   isError,
+  anchor,
 }) => {
+  const ref = useRef<HTMLSpanElement>(null);
+  useEffect(() => {
+    if (!anchor) return;
+    ref.current?.scrollIntoView();
+  }, [anchor]);
   const message = useMemo(() => {
     const line = content
       .split(/\r\n|\r|\n/)
@@ -123,7 +145,7 @@ const LogLine: FC<{ content: string; isError: boolean }> = ({
     );
   }, [content]);
   return (
-    <span className={`flex flex-row animate-highlight`}>
+    <span className={`flex flex-row animate-highlight`} ref={ref}>
       <span
         className={`${isError && "bg-error"} w-5 inline-block flex-shrink-0`}
       />
